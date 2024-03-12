@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Bitacora;
 use App\Models\pagina;
 use Illuminate\Http\Request;
 
@@ -37,6 +38,8 @@ class PaginaController extends Controller
         ]);
 
         $pagina = Pagina::create($request->all());
+
+        Bitacora::add("Pagina creado con id: {$pagina->id}");
         return response()->json($pagina, 201);
     }
 
@@ -70,6 +73,9 @@ class PaginaController extends Controller
         ]);
 
         $pagina->update($request->all());
+
+        Bitacora::add("Pagina con id: {$pagina->id} actualizada");
+
         return response()->json(['message' => 'Pagina Actualizada', 'Pagina' => $pagina, 200]); // 200 = OK, 201 = Created, 204 = No Content, 400 = Bad Request, 401 = Unauthorized, 403 = Forbidden, 404 = Not Found, 422 = Unprocessable Entity, 500 = Internal Server Error, 503 =
     }
 
@@ -80,6 +86,9 @@ class PaginaController extends Controller
     {
         $pagina = Pagina::findOrFail($pagina->id);
         $pagina->delete();
+
+        Bitacora::add("Pagina con id: {$pagina->id} borrada");
+
         return response()->json(['message' => 'Pagina Eliminada', 'Pagina' => $pagina, 200]); // 200 = OK, 201 = Created, 204 = No Content, 400 = Bad Request, 401 = Unauthorized, 403 = Forbidden, 404 = Not Found, 42
 
     }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Bitacora;
 use App\Models\role;
 use Illuminate\Http\Request;
 
@@ -34,6 +35,8 @@ class RoleController extends Controller
         ]);
 
         $roles = Role::create($request->all());
+
+        Bitacora::add("Rol con id: {$roles->id} creado");
         return response()->json($roles, 201);
     }
 
@@ -65,6 +68,8 @@ class RoleController extends Controller
 
         $roles = Role::findOrFail($id);
         $roles->update($request->all());
+
+        Bitacora::add("Rol con id: {$roles->id} actualizado");
         return response()->json(['message' => 'Rol Actualizado', 'Rol' => $roles, 200]); // 200 = OK, 201 = Created, 204 = No Content, 400 = Bad Request, 401 = Unauthorized, 403 = Forbidden, 404 = Not Found, 422 = Unprocessable Entity, 500 = Internal Server Error, 503 =
     }
 
@@ -75,6 +80,8 @@ class RoleController extends Controller
     {
         $roles = Role::findOrFail($role->id);
         $roles->delete();
+
+        Bitacora::add("Rol con id: {$roles->id} borrado");
         return response()->json(['message' => 'Rol Eliminado', 'Rol' => $roles, 200]); // 200 = OK, 201 = Created, 204 = No Content, 400 = Bad Request, 401 = Unauthorized, 403 = Forbidden, 404 = Not Found, 42
     }
 }

@@ -88,6 +88,8 @@ class UserController extends Controller
         }
 
         $usuario->update($data);
+
+        Bitacora::add("Usuario con id: {$usuario->id} actualizado");
         return response()->json($usuario, 200);
     }
 
@@ -99,6 +101,8 @@ class UserController extends Controller
     {
         $usuario = User::findOrFail($id);
         $usuario->delete();
+
+        Bitacora::add("Usuario con id: {$usuario->id} borrado");
         return response()->json(['usuario: ' => $usuario], 200);
     }
 }

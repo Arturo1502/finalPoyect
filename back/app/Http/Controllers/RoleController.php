@@ -12,7 +12,7 @@ class RoleController extends Controller
      */
     public function index()
     {
-        $roles = role::all();
+        $roles = Role::all();
         return response()->json($roles, 200);
     }
 
@@ -33,7 +33,7 @@ class RoleController extends Controller
             'nombre' => 'required|unique:roles'
         ]);
 
-        $roles = role::create($request->all());
+        $roles = Role::create($request->all());
         return response()->json($roles, 201);
     }
 
@@ -42,7 +42,7 @@ class RoleController extends Controller
      */
     public function show($id)
     {
-        $roles = role::findOrFail($id);
+        $roles = Role::findOrFail($id);
         return response()->json(['Rol: ' => $roles], 201);  // 200 = OK, 201 = Created, 204 = No Content, 400 = Bad Request, 401 = Unauthorized, 403 = Forbidden, 404 = Not Found, 422 = Unprocessable Entity, 500 = Internal Server Error, 503 =
     }
 
@@ -63,7 +63,7 @@ class RoleController extends Controller
             'nombre' => 'required|string|unique:roles'
         ]);
 
-        $roles = role::findOrFail($id);
+        $roles = Role::findOrFail($id);
         $roles->update($request->all());
         return response()->json(['message' => 'Rol Actualizado', 'Rol' => $roles, 200]); // 200 = OK, 201 = Created, 204 = No Content, 400 = Bad Request, 401 = Unauthorized, 403 = Forbidden, 404 = Not Found, 422 = Unprocessable Entity, 500 = Internal Server Error, 503 =
     }
@@ -71,9 +71,9 @@ class RoleController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(role $role)
+    public function destroy(Role $role)
     {
-        $roles = role::findOrFail($role->id);
+        $roles = Role::findOrFail($role->id);
         $roles->delete();
         return response()->json(['message' => 'Rol Eliminado', 'Rol' => $roles, 200]); // 200 = OK, 201 = Created, 204 = No Content, 400 = Bad Request, 401 = Unauthorized, 403 = Forbidden, 404 = Not Found, 42
     }

@@ -12,7 +12,7 @@ class PaginaController extends Controller
      */
     public function index()
     {
-        $paginas = pagina::all();
+        $paginas = Pagina::all();
         return response()->json($paginas, 200);
     }
 
@@ -60,7 +60,7 @@ class PaginaController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, pagina $pagina)
+    public function update(Request $request, Pagina $pagina)
     {
         $request->validate([
             'url' => 'required|string|unique:paginas,url',
@@ -76,7 +76,7 @@ class PaginaController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(pagina $pagina)
+    public function destroy(Pagina $pagina)
     {
         $pagina = Pagina::findOrFail($pagina->id);
         $pagina->delete();

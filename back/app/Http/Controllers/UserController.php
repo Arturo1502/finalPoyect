@@ -3,18 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Models\Bitacora;
+use App\Models\User;
 use App\Models\usuario;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
-class UsuarioController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $usuarios = usuario::all();
+        $usuarios = User::all();
         return response()->json($usuarios, 200);
     }
 
@@ -43,7 +44,7 @@ class UsuarioController extends Controller
         $data = $request->all();
         $data['clave'] = Hash::make($request->clave);
 
-        $usuario = usuario::create($data);
+        $usuario = User::create($data);
 
         Bitacora::add("Usuario creado con id: {$usuario->id}");
         return response()->json($usuario, 201);
@@ -54,7 +55,7 @@ class UsuarioController extends Controller
      */
     public function show($id)
     {
-        $usuario = usuario::findOrFail($id);
+        $usuario = User::findOrFail($id);
         return response()->json(['usuario: ' => $usuario], 200);
     }
 
@@ -79,7 +80,7 @@ class UsuarioController extends Controller
             "id_rol" => 'required|string',
         ]);
 
-        $usuario = usuario::findOrFail($id);
+        $usuario = User::findOrFail($id);
         $data = $request->all();
 
         if ($request->has('clave')) {
@@ -96,7 +97,7 @@ class UsuarioController extends Controller
      */
     public function destroy($id)
     {
-        $usuario = usuario::findOrFail($id);
+        $usuario = User::findOrFail($id);
         $usuario->delete();
         return response()->json(['usuario: ' => $usuario], 200);
     }

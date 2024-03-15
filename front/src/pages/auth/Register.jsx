@@ -14,9 +14,9 @@ const Register = () => {
 
   const [showPassword, setShowPassword] = useState(false);
   return (
-    <div className="flex items-center justify-center min-h-screen p-4 bg-morado">
+    <div className="flex items-center justify-center min-h-screen p-4 bg-sidebar">
       <div className="bg-azull p-8 rounded-xl shadow-2xl w-auto lg:w-[550px] h-[700px] ">
-        <h1 className="text-3xl text-center uppercase font-bold tracking-[5px] text-cyan mb-8">
+        <h1 className="text-3xl text-center uppercase font-bold tracking-[5px] text-esmeralda mb-8">
           Crear cuenta
         </h1>
         <form
@@ -25,7 +25,7 @@ const Register = () => {
           className="mb-10"
         >
           <div className="relative mb-10">
-            <RiUserLine className="absolute -translate-y-1/2 top-1/2 left-2 text-cyan" />
+            <RiUserLine className="absolute -translate-y-1/2 top-1/2 left-2 text-esmeralda" />
             <input
               type="text"
               className="w-full py-3 pl-8 pr-4 text-azull rounded-lg outline-none "
@@ -34,7 +34,7 @@ const Register = () => {
             />
           </div>
           <div className="relative mb-10">
-            <RiUserLine className="absolute -translate-y-1/2 top-1/2 left-2 text-[#4791ff]" />
+            <RiUserLine className="absolute -translate-y-1/2 top-1/2 left-2 text-esmeralda" />
             <input
               type="text"
               className="w-full py-3 pl-8 pr-4 text-azull rounded-lg outline-none"
@@ -43,7 +43,7 @@ const Register = () => {
             />
           </div>
           <div className="relative mb-10">
-            <RiMailLine className="absolute -translate-y-1/2 top-1/2 left-2 text-[#4791ff]" />
+            <RiMailLine className="absolute -translate-y-1/2 top-1/2 left-2 text-esmeralda" />
             <input
               type="email"
               className="w-full py-3 pl-8 pr-4 text-azull rounded-lg outline-none"
@@ -52,7 +52,7 @@ const Register = () => {
             />
           </div>
           <div className="relative mb-10">
-            <RiMailLine className="absolute -translate-y-1/2 top-1/2 left-2 text-[#4791ff]" />
+            <RiMailLine className="absolute -translate-y-1/2 top-1/2 left-2 text-esmeralda" />
             <input
               type="date"
               className="w-full py-3 pl-8 pr-4 text-azull rounded-lg outline-none"
@@ -61,7 +61,7 @@ const Register = () => {
             />
           </div>
           <div className="relative mb-10">
-            <RiLockLine className="absolute -translate-y-1/2 top-1/2 left-2 text-[#4791ff]" />
+            <RiLockLine className="absolute -translate-y-1/2 top-1/2 left-2 text-esmeralda" />
             <input
               type={showPassword ? "text" : "password"}
               className="w-full py-3 pl-8 pr-4 text-azull rounded-lg outline-none"
@@ -71,12 +71,12 @@ const Register = () => {
             {showPassword ? (
               <RiEyeOffLine
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute -translate-y-1/2 top-1/2 right-2 hover:cursor-pointer text-[#4791ff]"
+                className="absolute -translate-y-1/2 top-1/2 right-2 hover:cursor-pointer text-esmeralda"
               />
             ) : (
               <RiEyeLine
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute -translate-y-1/2 top-1/2 right-2 hover:cursor-pointer text-[#4791ff]"
+                className="absolute -translate-y-1/2 top-1/2 right-2 hover:cursor-pointer text-esmeralda"
               />
             )}
           </div>
@@ -84,7 +84,7 @@ const Register = () => {
           <div>
             <button
               type="submit"
-              className="w-full px-4 py-3 text-sm font-bold text-black uppercase rounded-lg bg-slate-100 hover:bg-slate-300"
+              className="w-full px-4 py-3 text-sm font-bold text-black uppercase rounded-lg bg-slate-100 hover:bg-esmeralda"
             >
               Registrarme
             </button>
@@ -94,7 +94,7 @@ const Register = () => {
           {" "}
           <Link
             to="/login"
-            className="transition-colors text-fondoclaro hover:text-gray-300"
+            className="transition-colors text-fondoclaro hover:text-esmeralda"
           >
             ¿Ya tienes cuenta? Ingresa
           </Link>

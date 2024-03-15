@@ -1,6 +1,6 @@
-# Estructura del Proyecto 🏗️
+#¡Bienvenido al PROYECTO FINAL FUNVAL! 🎉
 
-##¡Bienvenido al PROYECTO FINAL FUNVAL! 🎉
+# Estructura del Proyecto 🏗️
 
 Este proyecto está estructurado en dos partes principales: `frontend` y `backend`. La carpeta `frontend` contiene la interfaz de usuario desarrollada con REACT, mientras que la carpeta `backend` contiene la lógica del servidor desarrollada con LARAVEL.
 

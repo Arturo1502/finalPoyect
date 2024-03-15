@@ -7,59 +7,59 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
-## About Laravel
+# 🚀 BITACORA API
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+¡Bienvenido a la documentación de la API de bitacoras! Esta API está diseñada para proporcionar funcionalidades relacionadas con la gestión de usuarios, roles, páginas y bitácoras.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Endpoints
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+A continuación se detallan los endpoints disponibles en esta API:
 
-## Learning Laravel
+- **/login**
+  - *Descripción*: Endpoint para iniciar sesión.
+  - *Método HTTP*: POST
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- **/logout**
+  - *Descripción*: Endpoint para cerrar sesión.
+  - *Método HTTP*: POST
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+- **/refresh**
+  - *Descripción*: Endpoint para refrescar el token de acceso.
+  - *Método HTTP*: POST
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- **/me**
+  - *Descripción*: Endpoint para ver el perfil del usuario autenticado.
+  - *Método HTTP*: GET
 
-## Laravel Sponsors
+- **/register**
+  - *Descripción*: Endpoint para registrar un nuevo usuario.
+  - *Método HTTP*: POST
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+- **/estados**
+  - *Descripción*: Endpoint para obtener una lista de todos los estados.
+  - *Método HTTP*: GET
 
-### Premium Partners
+- **/roles**
+  - *Descripción*: Endpoint para obtener una lista de todos los roles.
+  - *Método HTTP*: GET
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+- **/usuarios**
+  - *Descripción*: Endpoint para obtener una lista de todos los usuarios.
+  - *Método HTTP*: GET
 
-## Contributing
+- **/paginas**
+  - *Descripción*: Endpoint para obtener una lista de todas las páginas.
+  - *Método HTTP*: GET
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+- **/bitacoras**
+  - *Descripción*: Endpoint para obtener una lista de la bitácora.
+  - *Método HTTP*: GET
 
-## Code of Conduct
+## Contribuciones
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+¡Las contribuciones son bienvenidas! Si encuentras algún problema o tienes sugerencias para mejorar esta API, no dudes en abrir un issue o enviar una pull request.
 
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+👩‍💻👨‍💻🚀
 
 ## License
 

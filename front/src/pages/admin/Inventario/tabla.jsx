@@ -38,13 +38,13 @@ const statusColorMap = {
 };
 
 const INITIAL_VISIBLE_COLUMNS = [
+  "id",
   "imagen",
   "nombre",
-  "codigo",
-  "marca",
-  "categoria",
-  "costo",
-  "precio",
+  "email",
+  "fecha de creacion",
+  "rol",
+  "estado",
   "actions",
 ];
 
@@ -69,11 +69,29 @@ export default function App() {
   const [productos, setProductos] = useState([]);
 
   useEffect(() => {
-    fetch("http://127.0.0.1:8000/api/producto")
+    fetch("http://127.0.0.1:8000/api/usuarios")
       .then((res) => res.json())
       .then((data) => setProductos(data))
       .catch((error) => console.error(error));
   }, []);
+
+  const handleDelete = (id) => {
+    fetch(`http://127.0.0.1:8000/api/usuarios/${id}`, {
+      method: "DELETE",
+    })
+      .then((response) => {
+        if (response.ok) {
+          // Eliminar el usuario de la lista local de productos
+          setProductos(productos.filter((producto) => producto.id !== id));
+        } else {
+          // Manejar errores si la solicitud no fue exitosa
+          console.error("Failed to delete user");
+        }
+      })
+      .catch((error) => {
+        console.error("Error deleting user:", error);
+      });
+  };
 
   const headerColumns = React.useMemo(() => {
     if (visibleColumns === "all") return columns;
@@ -88,7 +106,7 @@ export default function App() {
 
     if (filterValue) {
       filteredProductos = filteredProductos.filter((producto) =>
-        producto.nombre.toLowerCase().includes(filterValue.toLowerCase())
+        producto.name.toLowerCase().includes(filterValue.toLowerCase())
       );
     }
 
@@ -125,7 +143,7 @@ export default function App() {
 
   const renderCell = React.useCallback((producto, columnKey) => {
     const cellValue = producto[columnKey];
-    console.log(producto);
+
     switch (columnKey) {
       case "imagen":
         return (
@@ -135,46 +153,46 @@ export default function App() {
       case "nombre":
         return (
           <p className="text-bold text-tiny capitalize text-default-400 text-[16px]">
-            {producto.nombre}
+            {producto.name} , {producto.apellido}
           </p>
         );
-      case "codigo":
-        return (
-          <div className="flex flex-col">
-            <p className="text-bold text-small capitalize">{cellValue}</p>
-            <p className="text-bold text-tiny capitalize text-default-400">
-              {producto.cod}
-            </p>
-          </div>
-        );
-      case "marca":
-        return (
-          <Chip
-            className="capitalize"
-            color={statusColorMap[cellValue.marca]}
-            size="sm"
-            variant="flat"
-          >
-            {cellValue}
-          </Chip>
-        );
 
-      case "categoria":
+      case "email":
         return (
           <div className="flex flex-col">
             <p className="text-bold text-small capitalize"></p>
             <p className="text-bold text-tiny capitalize text-default-400">
-              {cellValue.nombre}
+              {producto.email}
             </p>
           </div>
         );
 
-      case "costo":
+      case "fecha de creacion":
         return (
           <div className="flex flex-col">
             <p className="text-bold text-small capitalize"></p>
             <p className="text-bold text-tiny capitalize text-default-400">
-              {producto.costo}
+              {producto.fecha_creacion}
+            </p>
+          </div>
+        );
+
+      case "estado":
+        return (
+          <div className="flex flex-col">
+            <p className="text-bold text-small capitalize"></p>
+            <p className="text-bold text-tiny capitalize text-default-400">
+              {producto.estado.nombre}
+            </p>
+          </div>
+        );
+
+      case "rol":
+        return (
+          <div className="flex flex-col">
+            <p className="text-bold text-small capitalize"></p>
+            <p className="text-bold text-tiny capitalize text-default-400">
+              {producto.role.nombre}
             </p>
           </div>
         );
@@ -192,11 +210,12 @@ export default function App() {
                 <DropdownItem
                   startContent={<EditIcon className={iconClasses} />}
                 >
-                  <Link to={`/inventario/edit/${producto.id}`}>Edit</Link>
+                  <Link to={`/usuarios/edit/${producto.id}`}>Edit</Link>
                 </DropdownItem>
 
                 <DropdownItem
                   startContent={<DeleteIcon className={iconClasses} />}
+                  onClick={() => handleDelete(producto.id)}
                 >
                   Delete
                 </DropdownItem>
@@ -244,7 +263,7 @@ export default function App() {
   }, []);
 
   //exportacion
-  const options = [5, 10, 15];
+  const options = [10, 20, 50];
   const handleExportPDF = () => {
     const doc = new jsPDF();
     doc.text(JSON.stringify(productos), 10, 10);
@@ -274,7 +293,7 @@ export default function App() {
         <div className="flex justify-between  gap-3 items-end ">
           <Input
             isClearable
-            className="border-2 border-blue-500 rounded-xl w-[30%]"
+            className="border-2 border-gray-400 rounded-xl w-[30%]"
             placeholder="Search by name..."
             startContent={<SearchIcon />}
             value={filterValue}
@@ -285,7 +304,7 @@ export default function App() {
             <Dropdown>
               <DropdownTrigger className="hidden sm:flex">
                 <Button
-                  className="bg-blue-500 text-white hidden "
+                  className="border-naranja-quemado text-white hidden "
                   endContent={<ChevronDownIcon className="text-small" />}
                   variant="flat"
                 >
@@ -307,10 +326,10 @@ export default function App() {
                 ))}
               </DropdownMenu>
             </Dropdown>
-            <Dropdown>
+            {/* <Dropdown>
               <DropdownTrigger className="hidden sm:flex">
                 <Button
-                  className="bg-blue-500 text-white"
+                  className="bg-naranja-quemado  hover:bg-orange-400 text-white"
                   endContent={<ChevronDownIcon className="text-small" />}
                   variant="flat"
                 >
@@ -331,7 +350,7 @@ export default function App() {
                   </DropdownItem>
                 ))}
               </DropdownMenu>
-            </Dropdown>
+            </Dropdown> */}
           </div>
         </div>
 
@@ -356,20 +375,22 @@ export default function App() {
         <div className=" flex gap-4 ">
           <button
             onClick={handleExportCSV}
-            className=" bg-blue-500  hover:bg-blue-700 text-white font-bold py-[6px] px-4 rounded"
+            className="  bg-naranja-quemado  hover:bg-orange-400 text-white font-bold py-[6px] px-4 rounded"
           >
             Export to CSV
           </button>
           <button
-            className=" bg-blue-500  hover:bg-blue-700 text-white font-bold py-[6px] px-4 rounded"
+            className="  bg-naranja-quemado  hover:bg-orange-400 text-white font-bold py-[6px] px-4 rounded"
             onClick={handleExportPDF}
           >
             Export to PDF
           </button>
           <div>
-            <Button color="primary" className="w-[130px] absolute right-0">
-              <Link to="/inventario/add">Añadir Producto</Link>
-            </Button>
+            <Link to="/usuarios/add">
+              <Button  className="w-[130px] absolute right-0 bg-naranja-quemado text-white">
+                Añadir Usuario
+              </Button>
+            </Link>
           </div>
         </div>
         <div>

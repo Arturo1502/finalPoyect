@@ -13,7 +13,7 @@ class PaginaController extends Controller
      */
     public function index()
     {
-        $paginas = Pagina::all();
+        $paginas = pagina::all();
         return response()->json($paginas, 200);
     }
 
@@ -38,8 +38,7 @@ class PaginaController extends Controller
         ]);
 
         $pagina = Pagina::create($request->all());
-
-        Bitacora::add("Pagina creado con id: {$pagina->id}");
+        Bitacora::add("Pagina WEB creada con id: {$pagina->id}");
         return response()->json($pagina, 201);
     }
 
@@ -63,7 +62,7 @@ class PaginaController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Pagina $pagina)
+    public function update(Request $request, pagina $pagina)
     {
         $request->validate([
             'url' => 'required|string|unique:paginas,url',
@@ -73,22 +72,16 @@ class PaginaController extends Controller
         ]);
 
         $pagina->update($request->all());
-
-        Bitacora::add("Pagina con id: {$pagina->id} actualizada");
-
         return response()->json(['message' => 'Pagina Actualizada', 'Pagina' => $pagina, 200]); // 200 = OK, 201 = Created, 204 = No Content, 400 = Bad Request, 401 = Unauthorized, 403 = Forbidden, 404 = Not Found, 422 = Unprocessable Entity, 500 = Internal Server Error, 503 =
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Pagina $pagina)
+    public function destroy(pagina $pagina)
     {
         $pagina = Pagina::findOrFail($pagina->id);
         $pagina->delete();
-
-        Bitacora::add("Pagina con id: {$pagina->id} borrada");
-
         return response()->json(['message' => 'Pagina Eliminada', 'Pagina' => $pagina, 200]); // 200 = OK, 201 = Created, 204 = No Content, 400 = Bad Request, 401 = Unauthorized, 403 = Forbidden, 404 = Not Found, 42
 
     }

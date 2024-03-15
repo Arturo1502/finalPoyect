@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Bitacora;
 use App\Models\User;
-use App\Models\usuario;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -15,8 +14,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        $usuarios = User::all();
-        return response()->json($usuarios, 200);
+        $user = User::with('role', 'estado')->get();
+        return response()->json($user, 200);
     }
 
     /**
@@ -33,21 +32,21 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            "nombre" => 'required|string',
+            "name" => 'required|string',
             "apellido" => 'required|string',
-            "correo" => 'required|string',
-            "clave" => 'required|string',
-            "id_rol" => 'integer',
+            "email" => 'required|string',
+            "password" => 'required|string',
+            "id_rol" => 'required',
 
         ]);
 
         $data = $request->all();
-        $data['clave'] = Hash::make($request->clave);
+        $data['password'] = Hash::make($request->password);
 
-        $usuario = User::create($data);
+        $user = User::create($data);
 
-        Bitacora::add("Usuario creado con id: {$usuario->id}");
-        return response()->json($usuario, 201);
+        Bitacora::add("Usuario creado con id: {$user->id}");
+        return response()->json($user, 201);
     }
 
     /**
@@ -55,14 +54,14 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $usuario = User::findOrFail($id);
-        return response()->json(['usuario: ' => $usuario], 200);
+        $user = User::findOrFail($id);
+        return response()->json(['user: ' => $user], 200);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(usuario $usuario)
+    public function edit(User $user)
     {
         //
     }
@@ -73,24 +72,23 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            "nombre" => 'required|string',
+            "name" => 'required|string',
             "apellido" => 'required|string',
-            "correo" => 'required|string',
-            "clave" => 'required|string',
-            "id_rol" => 'required|string',
+            "email" => 'required|string',
+            "password" => 'required|string',
+            "id_rol" => 'required',
         ]);
 
-        $usuario = User::findOrFail($id);
+        $user = User::findOrFail($id);
         $data = $request->all();
 
-        if ($request->has('clave')) {
-            $data['clave'] = Hash::make($request->clave);
+        if ($request->has('password')) {
+            $data['password'] = Hash::make($request->password);
         }
 
-        $usuario->update($data);
-
-        Bitacora::add("Usuario con id: {$usuario->id} actualizado");
-        return response()->json($usuario, 200);
+        $user->update($data);
+        Bitacora::add("Usuario Actualizado con id: {$user->id}");
+        return response()->json($user, 200);
     }
 
 
@@ -99,10 +97,9 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        $usuario = User::findOrFail($id);
-        $usuario->delete();
-
-        Bitacora::add("Usuario con id: {$usuario->id} borrado");
-        return response()->json(['usuario: ' => $usuario], 200);
+        $User = User::findOrFail($id);
+        $User->delete();
+        Bitacora::add("Usuario eliminado con id: {$User->id}");
+        return response()->json(['User: ' => $User], 200);
     }
 }

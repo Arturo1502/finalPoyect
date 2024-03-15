@@ -1,5 +1,7 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import useFetch from "../services/UseFetch";
+import { useMyContext } from "../services/Context";
+import { Link, Navigate } from "react-router-dom";
 // Icons
 import {
   RiMailLine,
@@ -8,36 +10,48 @@ import {
   RiEyeOffLine,
 } from "react-icons/ri";
 const Login = () => {
+  const { user, loginUser } = useMyContext();
+  const { handleSubmitPost } = useFetch();
   const [showPassword, setShowPassword] = useState(false);
 
+
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    const data = await handleSubmitPost(e);
+
+
+    loginUser(data);
+  };
+
   return (
-    <div className="flex items-center justify-center min-h-screen p-4">
-      <div className="bg-secondary-100 p-8 rounded-xl shadow-2xl w-auto lg:w-[450px]">
+    <div className="flex items-center justify-center min-h-screen p-4 bg-gray-900">
+      {user && <Navigate to="/dashboard" />}
+      <div className="bg-[#378CE7] p-8 rounded-xl shadow-2xl w-auto lg:w-[450px]">
         <h1 className="text-3xl text-center uppercase font-bold tracking-[5px] text-white mb-8">
-          Iniciar <span className="text-[#4791ff]">sesión</span>
+          Iniciar sesión
         </h1>
-        <form className="mb-8">
-          <button className="flex items-center justify-center w-full gap-4 px-4 py-3 mb-8 text-gray-100 rounded-full bg-secondary-900">
-            <img
-              src="https://rotulosmatesanz.com/wp-content/uploads/2017/09/2000px-Google_G_Logo.svg_.png"
-              className="w-4 h-4"
-            />
-            Ingresa con google
-          </button>
+        <form
+          onSubmit={handleLogin}
+          action="http://127.0.0.1:8000/api/auth/login"
+          className="mb-8"
+        >
           <div className="relative mb-4">
             <RiMailLine className="absolute -translate-y-1/2 top-1/2 left-2 text-[#4791ff]" />
             <input
               type="email"
-              className="w-full py-3 pl-8 pr-4 text-white rounded-lg outline-none bg-secondary-900"
+              className="w-full py-3 pl-8 pr-4 text-white rounded-lg outline-none bg-slate-950"
               placeholder="Correo electrónico"
+              name="email"
             />
           </div>
           <div className="relative mb-8">
             <RiLockLine className="absolute -translate-y-1/2 top-1/2 left-2 text-[#4791ff]" />
             <input
               type={showPassword ? "text" : "password"}
-              className="w-full px-8 py-3 text-white rounded-lg outline-none bg-secondary-900"
+              className="w-full px-8 py-3 text-white rounded-lg outline-none bg-slate-950"
               placeholder="Contraseña"
+              name="password"
             />
             {showPassword ? (
               <RiEyeOffLine
@@ -52,30 +66,28 @@ const Login = () => {
             )}
           </div>
           <div>
-            <Link to="/dashboard">
-              <button
-                type="submit"
-                className="w-full px-4 py-3 text-sm font-bold text-black uppercase rounded-lg bg-[#4791ff]"
-              >
-                Ingresar
-              </button>
-            </Link>
+            <button
+              type="submit"
+              className="w-full px-4 py-3 text-sm font-bold text-black uppercase rounded-lg bg-slate-300 hover:bg-slate-100"
+            >
+              Ingresar
+            </button>
           </div>
         </form>
         <div className="flex flex-col items-center gap-4">
-          <Link
+          {/* <Link
             to="/olvide-password"
-            className="transition-colors hover:text-[#4791ff] text-slate-100"
+            className="transition-colors hover:text-white text-black"
           >
             ¿Olvidaste tu contraseña?
-          </Link>
-          <span className="flex items-center gap-2 transition-colors hover:text-[red] text-slate-100 ">
-            ¿No tienes cuenta?{" "}
+          </Link> */}
+          <span className="flex items-center gap-2 transition-colors  text-black ">
+            {" "}
             <Link
-              to="/registro"
-              className="transition-colors text-[#4791ff] hover:text-gray-100"
+              to="/register"
+              className="transition-colors text-black hover:text-white"
             >
-              Registrate
+              ¿No tienes cuenta? Registrate
             </Link>
           </span>
         </div>

@@ -7,9 +7,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class User extends Authenticatable implements JWTSubject 
+class User extends Authenticatable implements JWTSubject
 {
     use HasApiTokens, HasFactory, Notifiable;
 
@@ -18,8 +19,9 @@ class User extends Authenticatable implements JWTSubject
      *
      * @var array<int, string>
      */
+    public $timestamps = false;
     protected $fillable = [
-        'nombre',
+        'name',
         'apellido',
         'email',
         'password',
@@ -32,7 +34,8 @@ class User extends Authenticatable implements JWTSubject
      * @var array<int, string>
      */
     protected $hidden = [
-        'clave',
+        'password',
+        'remember_token',
     ];
 
     /**
@@ -44,16 +47,24 @@ class User extends Authenticatable implements JWTSubject
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
-    public $timestamps=false;
+
+    public function role()
+    {
+        return $this->belongsTo(role::class, 'id_rol');
+    }
+
+    public function estado()
+    {
+        return $this->belongsTo(estado::class, 'id_estado');
+    }
 
     public function getJWTIdentifier()
     {
-        return $this->getKey(); 
+        return $this->getKey();
     }
 
     public function getJWTCustomClaims()
     {
         return [];
     }
-
 }

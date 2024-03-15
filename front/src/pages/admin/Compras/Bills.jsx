@@ -37,17 +37,7 @@ const statusColorMap = {
   ordenado: "warning",
 };
 
-const INITIAL_VISIBLE_COLUMNS = [
-  "fecha",
-  "N° factura",
-  "proveedor",
-  // "estado de compra",
-  // "total",
-  // "pagado",
-  // "debido",
-  "estado de pago",
-  "actions",
-];
+const INITIAL_VISIBLE_COLUMNS = ["id", "descripcion", "fecha", "hora"];
 
 export default function App() {
   const iconClasses =
@@ -70,11 +60,13 @@ export default function App() {
   const [productos, setProductos] = useState([]);
 
   useEffect(() => {
-    fetch("http://127.0.0.1:8000/api/compra")
+    fetch("http://127.0.0.1:8000/api/bitacoras")
       .then((res) => res.json())
       .then((data) => setProductos(data))
       .catch((error) => console.error(error));
   }, []);
+
+
 
   const headerColumns = React.useMemo(() => {
     if (visibleColumns === "all") return columns;
@@ -89,7 +81,7 @@ export default function App() {
 
     if (filterValue) {
       filteredProductos = filteredProductos.filter((producto) =>
-        producto.nombre.toLowerCase().includes(filterValue.toLowerCase())
+        producto.descripcion.toLowerCase().includes(filterValue.toLowerCase())
       );
     }
     if (
@@ -127,54 +119,33 @@ export default function App() {
     const cellValue = columnKey;
 
     switch (columnKey) {
+      case "id":
+        return (
+          <p className="text-bold text-tiny capitalize text-default-400 text-[16px]">
+            {producto.id}
+          </p>
+        );
+
+      case "descripcion":
+        return (
+          <div className="flex flex-col">
+            <p className="text-bold text-tiny capitalize text-default-400">
+              {producto.descripcion}
+            </p>
+          </div>
+        );
+
       case "fecha":
         return (
           <p className="text-bold text-tiny capitalize text-default-400 text-[16px]">
-            {producto.created_at}
+            {producto.fecha}
           </p>
         );
-      case "N° factura":
+      case "hora":
         return (
           <div className="flex flex-col">
             <p className="text-bold text-tiny capitalize text-default-400">
-              {producto.num_factura}
-            </p>
-          </div>
-        );
-      case "proveedor":
-        return (
-          <div className="flex flex-col">
-            <p className="text-bold text-tiny capitalize text-default-400">
-              {producto.proveedore.compañia}
-            </p>
-          </div>
-        );
-      /* case "estado de compra":
-        return (
-          <Chip
-            className="capitalize"
-            color={statusOptions[cellValue.marca]}
-            size="sm"
-            variant="flat"
-          ></Chip>
-        ); */
-
-      case "estado de compra":
-        return (
-          <Chip
-            className="capitalize"
-            color={statusColorMap["recibido"]}
-            size="sm"
-            variant="flat"
-          >
-            {"recibido"}
-          </Chip>
-        );
-      case "total":
-        return (
-          <div className="flex flex-col">
-            <p className="text-bold text-tiny capitalize text-default-400">
-              {producto.productos[0].costo}
+              {producto.hora}
             </p>
           </div>
         );
@@ -193,52 +164,6 @@ export default function App() {
             <p className="text-bold text-tiny capitalize text-default-400">
               {/* funcion para que reste total menos pagado */}
             </p>
-          </div>
-        );
-
-      case "estado de pago":
-        return (
-          <Chip
-            className="capitalize"
-            color={statusOptions[cellValue.marca]}
-            size="sm"
-            variant="flat"
-          ></Chip>
-        );
-
-      /* case "categoria":
-        return (
-          <div className="flex flex-col">
-            <p className="text-bold text-small capitalize"></p>
-            <p className="text-bold text-tiny capitalize text-default-400">
-              {cellValue.nombre}
-            </p>
-          </div>
-        ); */
-
-      case "actions":
-        return (
-          <div className="relative flex justify-end items-center gap-2">
-            <Dropdown>
-              <DropdownTrigger>
-                <Button isIconOnly size="sm" variant="light">
-                  <VerticalDotsIcon className="text-default-300" />
-                </Button>
-              </DropdownTrigger>
-              <DropdownMenu>
-                <DropdownItem
-                  startContent={<EyeIcon className={iconClasses} />}
-                >
-                  <Link to={`/compras/view/${producto.id}`}>View</Link>
-                </DropdownItem>
-
-                <DropdownItem
-                  startContent={<DeleteIcon className={iconClasses} />}
-                >
-                  Delete
-                </DropdownItem>
-              </DropdownMenu>
-            </Dropdown>
           </div>
         );
 
@@ -281,7 +206,7 @@ export default function App() {
   }, []);
 
   //exportacion
-  const options = [5, 10, 15];
+  const options = [10, 20, 50];
   const handleExportPDF = () => {
     const doc = new jsPDF();
     doc.text(JSON.stringify(productos), 10, 10);
@@ -311,7 +236,7 @@ export default function App() {
         <div className="flex justify-between  gap-3 items-end ">
           <Input
             isClearable
-            className="border-2 border-blue-500 rounded-xl w-[30%]"
+            className="border-2 border-gray-500 rounded-xl w-[30%]"
             placeholder="Search by name..."
             startContent={<SearchIcon />}
             value={filterValue}
@@ -319,35 +244,11 @@ export default function App() {
             onValueChange={onSearchChange}
           />
           <div className="flex gap-3">
-            <Dropdown>
+            
+            {/* <Dropdown>
               <DropdownTrigger className="hidden sm:flex">
                 <Button
-                  className="bg-blue-500 text-white"
-                  endContent={<ChevronDownIcon className="text-small" />}
-                  variant="flat"
-                >
-                  Status
-                </Button>
-              </DropdownTrigger>
-              <DropdownMenu
-                disallowEmptySelection
-                aria-label="Table Columns"
-                closeOnSelect={false}
-                selectedKeys={statusFilter}
-                selectionMode="multiple"
-                onSelectionChange={setStatusFilter}
-              >
-                {statusOptions.map((status) => (
-                  <DropdownItem key={status.uid} className="capitalize">
-                    {capitalize(status.name)}
-                  </DropdownItem>
-                ))}
-              </DropdownMenu>
-            </Dropdown>
-            <Dropdown>
-              <DropdownTrigger className="hidden sm:flex">
-                <Button
-                  className="bg-blue-500 text-white"
+                  className="bg-naranja-quemado text-white"
                   endContent={<ChevronDownIcon className="text-small" />}
                   variant="flat"
                 >
@@ -368,7 +269,7 @@ export default function App() {
                   </DropdownItem>
                 ))}
               </DropdownMenu>
-            </Dropdown>
+            </Dropdown> */}
           </div>
         </div>
 
@@ -393,28 +294,16 @@ export default function App() {
         <div className=" flex gap-4 ">
           <button
             onClick={handleExportCSV}
-            className=" bg-blue-500  hover:bg-blue-700 text-white font-bold py-[6px] px-4 rounded"
+            className=" bg-naranja-quemado  hover:bg-orange-400 text-white font-bold py-[6px] px-4 rounded"
           >
             Export to CSV
           </button>
           <button
-            className=" bg-blue-500  hover:bg-blue-700 text-white font-bold py-[6px] px-4 rounded"
+            className=" bg-naranja-quemado  hover:bg-orange-400 text-white font-bold py-[6px] px-4 rounded"
             onClick={handleExportPDF}
           >
             Export to PDF
           </button>
-          <div>
-            <Button color="primary" className="w-[130px] absolute right-0">
-              <Link to="/compras/add">Añadir Factura</Link>
-            </Button>
-          </div>
-        </div>
-        <div>
-          {/* Botón para exportar a Excel */}
-          {/* <button onClick={handleExportExcel}>Export to Excel</button> */}
-          {/* Botón para exportar a PDF */}
-
-          {/* Resto del código... */}
         </div>
       </div>
     );

@@ -19,7 +19,7 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-        
+
         $this->middleware('auth:api', ['except' => ['login', 'register']]);
     }
 
@@ -28,11 +28,20 @@ class AuthController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function login()
+    public function login(Request $request)
     {
-        $credentials = request(['email', 'password']);
+        $validator = Validator::make($request->all(), [
+            "email" => 'required|string|email',
+            'password' => 'required|string|min:4',
+        ]);
 
-        if (! $token = auth()->attempt($credentials)) {
+        if ($validator->fails()) {
+            return response()->json($validator->errors()->toJson(), 400);
+        }
+
+        $credentials = $request->only('email', 'password');
+
+        if (!$token = auth()->attempt($credentials)) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
 
@@ -80,34 +89,39 @@ class AuthController extends Controller
      */
     protected function respondWithToken($token)
     {
+        $user = auth()->user();
+
         return response()->json([
             'access_token' => $token,
             'token_type' => 'bearer',
-            'expires_in' => auth()->factory()->getTTL() * 60
+            'expires_in' => auth()->factory()->getTTL() * 60,
+            'user' => $user
         ]);
     }
 
-    public function register(Request $request){
+    public function register(Request $request)
+    {
         $validator = Validator::make($request->all(), [
-            "nombre" => 'required|string',
+            "name" => 'required|string',
             "apellido" => 'required|string',
             'email' => 'required|string|email|unique:users',
             'password' => 'required|string|min:4',
-            "id_rol" => 'string',
-            
+            "id_rol" => 'integer',
+
 
         ]);
-        if($validator->fails()){
+        if ($validator->fails()) {
             return response()->json($validator->errors()->toJson(), 400);
         }
         $user = User::create(array_merge(
             $validator->validate(),
-            ['password'=> bcrypt($request->password)]
+            ['password' => bcrypt($request->password)] // Corregido
         ));
         Bitacora::add("Usuario creado con id: {$user->id}");
+
         return response()->json([
             'message' => 'Usuario registrado correctamente',
             'usuario' => $user
-        ],201);
+        ], 201);
     }
 }

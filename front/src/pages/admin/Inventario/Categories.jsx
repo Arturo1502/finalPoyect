@@ -38,7 +38,13 @@ const statusColorMap = {
   vacation: "warning",
 };
 
-const INITIAL_VISIBLE_COLUMNS = ["id", "nombre", "codigo", "actions"];
+const INITIAL_VISIBLE_COLUMNS = [
+  "id",
+  "url",
+  "nombre",
+  "descripcion",
+  "actions",
+];
 
 export default function App() {
   const iconClasses =
@@ -61,8 +67,8 @@ export default function App() {
   // Estado para los datos obtenidos de la API
   const [productos, setProductos] = useState([]);
   const handleDelete = (id) => {
-    if (window.confirm("¿Estás seguro de que deseas eliminar este producto?")) {
-      fetch(`http://127.0.0.1:8000/api/categoria/${id}`, {
+    if (window.confirm("¿Estás seguro de que deseas eliminar esta URL?")) {
+      fetch(`http://127.0.0.1:8000/api/paginas/${id}`, {
         method: "DELETE",
       })
         .then((response) => {
@@ -83,7 +89,7 @@ export default function App() {
   };
 
   useEffect(() => {
-    fetch("http://127.0.0.1:8000/api/categoria")
+    fetch("http://127.0.0.1:8000/api/paginas")
       .then((res) => res.json())
       .then((data) => setProductos(data))
       .catch((error) => console.error(error));
@@ -145,18 +151,24 @@ export default function App() {
           <User avatarProps={{ radius: "lg", src: producto.avatar }}></User>
         );
 
+      case "url":
+        return (
+          <p className="text-bold text-tiny capitalize text-default-400 text-[16px]">
+            {producto.url}
+          </p>
+        );
       case "nombre":
         return (
           <p className="text-bold text-tiny capitalize text-default-400 text-[16px]">
             {producto.nombre}
           </p>
         );
-      case "codigo":
+      case "descripcion":
         return (
           <div className="flex flex-col">
-            <p className="text-bold text-small capitalize">{cellValue}</p>
+            <p className="text-bold text-small capitalize"></p>
             <p className="text-bold text-tiny capitalize text-default-400">
-              {producto.cod}
+              {producto.descripcion}
             </p>
           </div>
         );
@@ -247,7 +259,7 @@ export default function App() {
   }, []);
 
   //exportacion
-  const options = [5, 10, 15];
+  const options = [10, 20, 50];
   const handleExportPDF = () => {
     const doc = new jsPDF();
     doc.text(JSON.stringify(productos), 10, 10);
@@ -277,7 +289,7 @@ export default function App() {
         <div className="flex justify-between  gap-3 items-end ">
           <Input
             isClearable
-            className="border-2 border-blue-500 rounded-xl w-[30%]"
+            className="border-2 border-gray-500 rounded-xl w-[30%]"
             placeholder="Search by name..."
             startContent={<SearchIcon />}
             value={filterValue}
@@ -288,7 +300,7 @@ export default function App() {
             <Dropdown>
               <DropdownTrigger className="hidden sm:flex">
                 <Button
-                  className="bg-blue-500 text-white hidden"
+                  className="bg-naranja-quemado text-white hidden"
                   endContent={<ChevronDownIcon className="text-small" />}
                   variant="flat"
                 >
@@ -310,10 +322,10 @@ export default function App() {
                 ))}
               </DropdownMenu>
             </Dropdown>
-            <Dropdown>
+            {/* <Dropdown>
               <DropdownTrigger className="hidden sm:flex">
                 <Button
-                  className="bg-blue-500 text-white"
+                  className="bg-naranja-quemado text-white"
                   endContent={<ChevronDownIcon className="text-small" />}
                   variant="flat"
                 >
@@ -334,7 +346,7 @@ export default function App() {
                   </DropdownItem>
                 ))}
               </DropdownMenu>
-            </Dropdown>
+            </Dropdown> */}
           </div>
         </div>
 
@@ -359,20 +371,22 @@ export default function App() {
         <div className=" flex gap-4 ">
           <button
             onClick={handleExportCSV}
-            className=" bg-blue-500  hover:bg-blue-700 text-white font-bold py-[6px] px-4 rounded"
+            className="  bg-naranja-quemado  hover:bg-orange-400 text-white font-bold py-[6px] px-4 rounded"
           >
             Export to CSV
           </button>
           <button
-            className=" bg-blue-500  hover:bg-blue-700 text-white font-bold py-[6px] px-4 rounded"
+            className="  bg-naranja-quemado  hover:bg-orange-400 text-white font-bold py-[6px] px-4 rounded"
             onClick={handleExportPDF}
           >
             Export to PDF
           </button>
           <div>
-            <Button color="primary" className="w-[130px] absolute right-0">
-              <Link to="/categorias/add">Añadir Categoria</Link>
-            </Button>
+            <Link to="/paginas/add">
+              <Button className="w-[130px] absolute right-0  bg-naranja-quemado text-white">
+                Añadir Pagina
+              </Button>
+            </Link>
           </div>
         </div>
         <div></div>

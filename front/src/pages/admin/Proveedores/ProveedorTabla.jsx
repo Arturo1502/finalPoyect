@@ -41,8 +41,8 @@ const statusColorMap = {
 const INITIAL_VISIBLE_COLUMNS = [
   "id",
   "nombre",
-  "email",
-  "compañia",
+  "fecha de creacion",
+  "estado",
   "actions",
 ];
 
@@ -67,11 +67,27 @@ export default function ProveedorTabla() {
   const [productos, setProductos] = useState([]);
 
   useEffect(() => {
-    fetch("http://127.0.0.1:8000/api/proveedore")
+    fetch("http://127.0.0.1:8000/api/roles")
       .then((res) => res.json())
       .then((data) => setProductos(data))
       .catch((error) => console.error(error));
   }, []);
+
+  const handleDelete = (id) => {
+    fetch(`http://127.0.0.1:8000/api/roles/${id}`, {
+      method: "DELETE",
+    })
+      .then((response) => {
+        if (response.ok) {
+          setProductos(productos.filter((producto) => producto.id !== id));
+        } else {
+          console.error("Failed to delete user");
+        }
+      })
+      .catch((error) => {
+        console.error("Error deleting user:", error);
+      });
+  };
 
   const headerColumns = React.useMemo(() => {
     if (visibleColumns === "all") return columns;
@@ -124,6 +140,18 @@ export default function ProveedorTabla() {
     const cellValue = producto[columnKey];
     /* console.log(producto); */
     switch (columnKey) {
+      case "fecha de creacion":
+        return (
+          <p className="text-bold text-tiny capitalize text-default-400 text-[16px]">
+            {producto.fecha_creacion}
+          </p>
+        );
+      case "estado":
+        return (
+          <p className="text-bold text-tiny capitalize text-default-400 text-[16px]">
+            {producto.estado.nombre}
+          </p>
+        );
       case "actions":
         return (
           <div className="relative flex justify-end items-center gap-2">
@@ -137,12 +165,11 @@ export default function ProveedorTabla() {
                 <DropdownItem
                   startContent={<EditIcon className={iconClasses} />}
                 >
-                  <Link to={`/proveedores/EditProveedo/${producto.id}`}>
-                    Edit
-                  </Link>
+                  <Link to={`/roles/edit/${producto.id}`}>Cambiar Estado</Link>
                 </DropdownItem>
                 <DropdownItem
                   startContent={<DeleteIcon className={iconClasses} />}
+                  onClick={() => handleDelete(producto.id)}
                 >
                   Delete
                 </DropdownItem>
@@ -190,7 +217,7 @@ export default function ProveedorTabla() {
   }, []);
 
   //exportacion
-  const options = [5, 10, 15];
+  const options = [10, 20, 50];
   const handleExportPDF = () => {
     const doc = new jsPDF();
     doc.text(JSON.stringify(productos), 10, 10);
@@ -220,7 +247,7 @@ export default function ProveedorTabla() {
         <div className="flex justify-between  gap-3 items-end ">
           <Input
             isClearable
-            className="border-2 border-blue-500 rounded-xl w-[30%]"
+            className="border-2 border-gray-500 rounded-xl w-[30%]"
             placeholder="Search by name..."
             startContent={<SearchIcon />}
             value={filterValue}
@@ -231,7 +258,7 @@ export default function ProveedorTabla() {
             <Dropdown>
               <DropdownTrigger className="hidden sm:flex">
                 <Button
-                  className="bg-blue-500 text-white hidden"
+                  className=" bg-naranja-quemado text-white hidden"
                   endContent={<ChevronDownIcon className="text-small" />}
                   variant="flat"
                 >
@@ -253,10 +280,10 @@ export default function ProveedorTabla() {
                 ))}
               </DropdownMenu>
             </Dropdown>
-            <Dropdown>
+            {/* <Dropdown>
               <DropdownTrigger className="hidden sm:flex">
                 <Button
-                  className="bg-blue-500 text-white"
+                  className=" bg-naranja-quemado text-white"
                   endContent={<ChevronDownIcon className="text-small" />}
                   variant="flat"
                 >
@@ -277,7 +304,7 @@ export default function ProveedorTabla() {
                   </DropdownItem>
                 ))}
               </DropdownMenu>
-            </Dropdown>
+            </Dropdown> */}
           </div>
         </div>
 
@@ -302,20 +329,22 @@ export default function ProveedorTabla() {
         <div className=" flex gap-4 ">
           <button
             onClick={handleExportCSV}
-            className=" bg-blue-500  hover:bg-blue-700 text-white font-bold py-[6px] px-4 rounded"
+            className="  bg-naranja-quemado  hover:bg-orange-400 text-white font-bold py-[6px] px-4 rounded"
           >
             Export to CSV
           </button>
           <button
-            className=" bg-blue-500  hover:bg-blue-700 text-white font-bold py-[6px] px-4 rounded"
+            className="  bg-naranja-quemado  hover:bg-orange-400 text-white font-bold py-[6px] px-4 rounded"
             onClick={handleExportPDF}
           >
             Export to PDF
           </button>
           <div>
-            <Button color="primary" className="w-[130px] absolute right-0">
-              <Link to="/proveedores/add">Añadir Proveedor</Link>
-            </Button>
+            <Link to="/roles/add">
+              <Button className="w-[130px] absolute right-0  bg-naranja-quemado text-white">
+                Añadir Rol
+              </Button>
+            </Link>
           </div>
         </div>
         <div>

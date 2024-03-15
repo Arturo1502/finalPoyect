@@ -15,7 +15,8 @@ return [
 
     'defaults' => [
         'guard' => 'api',
-        'password' => 'users',
+        'passwords' => 'users',
+        // 'clave' => 'usuarios',
     ],
 
     /*
@@ -45,7 +46,6 @@ return [
             'provider' => 'users',
             'hash' => false,
         ],
-
     ],
 
     /*

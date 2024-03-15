@@ -14,32 +14,32 @@ const CardTicket = (props) => {
 
   switch (ticket) {
     case "pending":
-      status = "bg-yellow-500/10 text-yellow-500";
+      status = "bg-yellow-800/10 text-yellow-200";
       textColor = "text-yellow-500";
       break;
     case "inProcess":
-      status = "bg-blue-500/10 text-blue-500";
+      status = "bg-blue-800/10 text-blue-200";
       textColor = "text-blue-500";
       break;
     case "close":
-      status = "bg-green-500/10 text-green-500";
-      textColor = "text-green-500";
+      status = "bg-green-800/10 text-green-200";
+      textColor = "text-cyan";
       break;
     case "total":
-      status = "bg-pink-500/10 text-pink-500";
+      status = "bg-pink-800/10 text-pink-200";
       textColor = "text-pink-500";
       break;
   }
 
   return (
-    <div className="p-8 bg-[#1E1F25] text-white rounded-xl">
-      <div className="flex items-center justify-between mb-4">
-        <div>
-          {/* <RiTicketLine
-            className={`text-4xl ${status} p-2 box-content rounded-xl`}
-          /> */}
+    <div className="p-8 bg-sidebar text-white rounded-xl">
+      <div className="flex ml-[30%] mb-4">
+        <div className="flex items-center">
+          <RiTicketLine
+            className={`text-4xl ${status} p-2 box-content rounded-xl `}
+          />
         </div>
-        <div>
+        {/* <div>
           <Menu
             menuButton={
               <MenuButton className="flex items-center p-2 transition-colors rounded-lg gap-x-2 hover:bg-secondary-900">
@@ -48,11 +48,11 @@ const CardTicket = (props) => {
             }
             align="end"
             arrow
-            arrowClassName="bg-secondary-100"
+            arrowClassName="bg-cyan"
             transition
-            menuClassName="bg-secondary-100 p-4"
+            menuClassName="bg-cyan p-4"
           >
-            {/* <MenuItem className="p-0 hover:bg-transparent">
+            <MenuItem className="p-0 hover:bg-transparent">
               <Link
                 to="/perfil"
                 className="flex items-center flex-1 p-2 text-gray-300 transition-colors rounded-lg hover:bg-secondary-900 gap-x-4"
@@ -67,9 +67,9 @@ const CardTicket = (props) => {
               >
                 Información
               </Link>
-            </MenuItem> */}
+            </MenuItem>
           </Menu>
-        </div>
+        </div> */}
       </div>
       {/* Number of tickets */}
       <div className="flex justify-center">
@@ -77,7 +77,7 @@ const CardTicket = (props) => {
       </div>
       <hr className="my-4 border border-dashed border-gray-500/50" />
       <div className="flex justify-center">
-        <Button color="primary" className="w-[140px]">
+        <Button  className="w-[140px] bg-cyan">
           <Link to={enlace}>{text}</Link>
         </Button>
       </div>

@@ -2,10 +2,10 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BitacoraController;
+use App\Http\Controllers\EstadoController;
 use App\Http\Controllers\PaginaController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\UsuarioController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -24,11 +24,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::resource('/roles', RoleController::class);
-
-Route::resource('/usuarios', UserController::class);
-
-
 Route::group([
     'middleware' => 'api',
     'prefix' => 'auth'
@@ -39,7 +34,13 @@ Route::group([
     Route::post('/me', [AuthController::class, 'me']);
     Route::post('/register', [AuthController::class, 'register']);
 });
+Route::resource('/estados', EstadoController::class);
 
+Route::resource('/roles', RoleController::class);
+
+Route::resource('/usuarios', UserController::class);
 
 Route::resource('/paginas', PaginaController::class);
-Route::resource('/bitacora', BitacoraController::class);
+
+
+Route::resource('/bitacoras', BitacoraController::class);

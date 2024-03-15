@@ -1,16 +1,16 @@
 # Estructura del Proyecto 🏗️
 
-¡Bienvenido al proyecto [Nombre del Proyecto]! 🎉
+##¡Bienvenido al PROYECTO FINAL FUNVAL! 🎉
 
-Este proyecto está estructurado en dos partes principales: `frontend` y `backend`. La carpeta `frontend` contiene la interfaz de usuario desarrollada con [tecnología utilizada en el frontend], mientras que la carpeta `backend` contiene la lógica del servidor desarrollada con [tecnología utilizada en el backend].
+Este proyecto está estructurado en dos partes principales: `frontend` y `backend`. La carpeta `frontend` contiene la interfaz de usuario desarrollada con REACT, mientras que la carpeta `backend` contiene la lógica del servidor desarrollada con LARAVEL.
 
 
-- **`frontend/`:** Contiene la interfaz de usuario desarrollada con [tecnología utilizada en el frontend].
+- **`frontend/`:** Contiene la interfaz de usuario desarrollada con REACT.
    - **`public/`:** Contiene archivos estáticos y el archivo HTML principal.
    - **`src/`:** Contiene el código fuente de la aplicación.
    - **`package.json`:** Archivo de configuración de npm con las dependencias del frontend.
 
-- **`backend/`:** Contiene la lógica del servidor desarrollada con [tecnología utilizada en el backend].
+- **`backend/`:** Contiene la lógica del servidor desarrollada con LARAVEL.
    - **`controllers/`:** Controladores que manejan las solicitudes HTTP.
    - **`models/`:** Modelos de datos que interactúan con la base de datos.
    - **`routes/`:** Rutas de la API que definen los endpoints y su funcionalidad.

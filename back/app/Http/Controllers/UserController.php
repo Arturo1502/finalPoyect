@@ -37,11 +37,14 @@ class UserController extends Controller
             "email" => 'required|string',
             "password" => 'required|string',
             "id_rol" => 'required',
-
         ]);
 
         $data = $request->all();
         $data['password'] = Hash::make($request->password);
+
+        // Generar el avatar dinámico
+        $id = User::count() + 1; // Obtener el siguiente ID
+        $data['avatar'] = "https://robohash.org/138.36.78.$id.png";
 
         $user = User::create($data);
 

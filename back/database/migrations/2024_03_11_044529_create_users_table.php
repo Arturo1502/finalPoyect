@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('apellido');
             $table->string('email')->unique();
             $table->string('password');
+            $table->string('avatar')->nullable(); // Nuevo campo para el enlace de avatar
             $table->date('fecha_nacimiento')->nullable();
             $table->unsignedBigInteger('id_estado')->default(1);
             $table->foreign('id_estado')->references('id')->on('estados');

@@ -14,9 +14,9 @@ const Register = () => {
 
   const [showPassword, setShowPassword] = useState(false);
   return (
-    <div className="flex items-center justify-center min-h-screen p-4 bg-gray-900">
-      <div className="bg-[#378CE7] p-8 rounded-xl shadow-2xl w-auto lg:w-[550px] h-[700px] ">
-        <h1 className="text-3xl text-center uppercase font-bold tracking-[5px] text-white mb-8">
+    <div className="flex items-center justify-center min-h-screen p-4 bg-morado">
+      <div className="bg-azull p-8 rounded-xl shadow-2xl w-auto lg:w-[550px] h-[700px] ">
+        <h1 className="text-3xl text-center uppercase font-bold tracking-[5px] text-cyan mb-8">
           Crear cuenta
         </h1>
         <form
@@ -25,10 +25,10 @@ const Register = () => {
           className="mb-10"
         >
           <div className="relative mb-10">
-            <RiUserLine className="absolute -translate-y-1/2 top-1/2 left-2 text-[#4791ff]" />
+            <RiUserLine className="absolute -translate-y-1/2 top-1/2 left-2 text-cyan" />
             <input
               type="text"
-              className="w-full py-3 pl-8 pr-4 text-white rounded-lg outline-none bg-slate-950"
+              className="w-full py-3 pl-8 pr-4 text-azull rounded-lg outline-none "
               placeholder="Nombre"
               name="name"
             />
@@ -37,7 +37,7 @@ const Register = () => {
             <RiUserLine className="absolute -translate-y-1/2 top-1/2 left-2 text-[#4791ff]" />
             <input
               type="text"
-              className="w-full py-3 pl-8 pr-4 text-white rounded-lg outline-none bg-slate-950"
+              className="w-full py-3 pl-8 pr-4 text-azull rounded-lg outline-none"
               placeholder="Apellidos"
               name="apellido"
             />
@@ -46,7 +46,7 @@ const Register = () => {
             <RiMailLine className="absolute -translate-y-1/2 top-1/2 left-2 text-[#4791ff]" />
             <input
               type="email"
-              className="w-full py-3 pl-8 pr-4 text-white rounded-lg outline-none bg-slate-950"
+              className="w-full py-3 pl-8 pr-4 text-azull rounded-lg outline-none"
               placeholder="Correo electrónico"
               name="email"
             />
@@ -55,7 +55,7 @@ const Register = () => {
             <RiMailLine className="absolute -translate-y-1/2 top-1/2 left-2 text-[#4791ff]" />
             <input
               type="date"
-              className="w-full py-3 pl-8 pr-4 text-white rounded-lg outline-none bg-slate-950"
+              className="w-full py-3 pl-8 pr-4 text-azull rounded-lg outline-none"
               placeholder="Correo electrónico"
               name="fecha_nacimiento"
             />
@@ -64,7 +64,7 @@ const Register = () => {
             <RiLockLine className="absolute -translate-y-1/2 top-1/2 left-2 text-[#4791ff]" />
             <input
               type={showPassword ? "text" : "password"}
-              className="w-full px-8 py-3 text-white rounded-lg outline-none bg-slate-950"
+              className="w-full py-3 pl-8 pr-4 text-azull rounded-lg outline-none"
               placeholder="Contraseña"
               name="password"
             />
@@ -84,7 +84,7 @@ const Register = () => {
           <div>
             <button
               type="submit"
-              className="w-full px-4 py-3 text-sm font-bold text-black uppercase rounded-lg bg-slate-300 hover:bg-slate-100"
+              className="w-full px-4 py-3 text-sm font-bold text-black uppercase rounded-lg bg-slate-100 hover:bg-slate-300"
             >
               Registrarme
             </button>
@@ -94,7 +94,7 @@ const Register = () => {
           {" "}
           <Link
             to="/login"
-            className="transition-colors text-black hover:text-white"
+            className="transition-colors text-fondoclaro hover:text-gray-300"
           >
             ¿Ya tienes cuenta? Ingresa
           </Link>

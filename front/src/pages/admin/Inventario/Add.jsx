@@ -64,9 +64,8 @@ function Add() {
     })
       .then((response) => response.json())
       .then((data) => {
-        const userId = data.id;
-        const avatarUrl = `https://robohash.org/138.36.78.${userId}.png`;
-        setAvatarUrl(avatarUrl);
+        
+        
         // console.log(data);
         setName("");
         setApellido("");

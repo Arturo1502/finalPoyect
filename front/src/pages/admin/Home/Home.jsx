@@ -24,8 +24,8 @@ const Home = () => {
         {/* Card */}
         <CardTicket
           ticket="total"
-          totalTickets="Bitacoras"
-          text="Ver Bitacoras"
+          totalTickets="Bitacora"
+          text="Ver Bitacora"
           enlace="/bitacora"
         />
         <CardTicket

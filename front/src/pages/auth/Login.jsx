@@ -19,8 +19,6 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     const data = await handleSubmitPost(e);
-
-
     loginUser(data);
   };
 

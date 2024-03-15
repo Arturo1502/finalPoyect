@@ -4,27 +4,6 @@
 
 Este proyecto está estructurado en dos partes principales: `frontend` y `backend`. La carpeta `frontend` contiene la interfaz de usuario desarrollada con [tecnología utilizada en el frontend], mientras que la carpeta `backend` contiene la lógica del servidor desarrollada con [tecnología utilizada en el backend].
 
-## Estructura de Directorios 📂
-
-El proyecto está organizado de la siguiente manera:
-
-
-proyecto/
-│
-├─── frontend/
-│ ├─── public/
-│ ├─── src/
-│ │ ├─── components/
-│ │ └─── ...
-│ ├─── package.json
-│ └─── ...
-│
-└─── backend/
-├─── controllers/
-├─── models/
-├─── routes/
-├─── package.json
-└─── ...
 
 - **`frontend/`:** Contiene la interfaz de usuario desarrollada con [tecnología utilizada en el frontend].
    - **`public/`:** Contiene archivos estáticos y el archivo HTML principal.
